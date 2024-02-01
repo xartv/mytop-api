@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ReviewController } from './review.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { AuthModel } from 'src/auth/auth.model';
+import { UserModel } from 'src/auth/user.model';
 import { ReviewModel } from './review.model';
 import { ReviewService } from './review.service';
 
