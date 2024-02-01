@@ -42,6 +42,8 @@ describe('AppController (e2e)', () => {
   });
 
   it('/review/create (POST) - success', async (done) => {
+    console.log(productId);
+
     return request(app.getHttpServer())
       .post('/review/create')
       .send(testDto)
