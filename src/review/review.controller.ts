@@ -11,6 +11,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { UserEmail } from '../decorators/user-email.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { REVIEW_NOT_FOUND } from './review.constants';
@@ -20,8 +21,13 @@ import { ReviewService } from './review.service';
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get('byProduct/:productId')
-  async getByProduct(@Param('productId') productId: string) {
+  async getByProduct(
+    @Param('productId') productId: string,
+    @UserEmail() email: string,
+  ) {
+    console.log(email);
     return this.reviewService.findByProductId(productId);
   }
 
@@ -43,6 +49,7 @@ export class ReviewController {
     return deletedDoc;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('byProduct/:productId')
   async deleteByProductId(@Param('productId') productId: string) {
     return this.reviewService.deleteByProductId(productId);
