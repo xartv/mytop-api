@@ -71,6 +71,11 @@ export class TopPageController {
     return findedDocument;
   }
 
+  @Get('textSearch/:text')
+  async textSearch(@Param('text') text: string) {
+    return this.topPageService.findByText(text);
+  }
+
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe())
   @Delete(':id')
