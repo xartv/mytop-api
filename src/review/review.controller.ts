@@ -28,7 +28,6 @@ export class ReviewController {
     @Param('productId', IdValidationPipe) productId: string,
     @UserEmail() email: string,
   ) {
-    console.log(email);
     return this.reviewService.findByProductId(productId);
   }
 
