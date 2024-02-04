@@ -26,16 +26,22 @@ export class TopPageService {
 
   async getByCategory(dto: FindTopPageDto) {
     return this.topPageModel
-      .find(
-        { firstCategory: dto.firstCategory },
-        { alias: 1, secondCategory: 1, title: 1 },
-      )
+      .aggregate()
+      .match({
+        firstCategory: dto.firstCategory,
+      })
+      .group({
+        _id: { secondCategory: '$secondCategory' },
+        pages: { $push: { alias: '$alias', title: '$title' } },
+      })
       .exec();
   }
 
   async findByText(text: string) {
-		return this.topPageModel.find({ $text: { $search: text, $caseSensitive: false } }).exec();
-	}
+    return this.topPageModel
+      .find({ $text: { $search: text, $caseSensitive: false } })
+      .exec();
+  }
 
   async delete(id: string) {
     return this.topPageModel.findByIdAndDelete(id).exec();
