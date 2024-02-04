@@ -20,6 +20,19 @@ export class TopPageService {
     return this.topPageModel.findById(id).exec();
   }
 
+  async getByAlias(alias: string) {
+    return this.topPageModel.findOne({ alias }).exec();
+  }
+
+  async getByCategory(dto: FindTopPageDto) {
+    return this.topPageModel
+      .find(
+        { firstCategory: dto.firstCategory },
+        { alias: 1, secondCategory: 1, title: 1 },
+      )
+      .exec();
+  }
+
   async delete(id: string) {
     return this.topPageModel.findByIdAndDelete(id).exec();
   }
@@ -27,8 +40,4 @@ export class TopPageService {
   async update(id: string, dto: CreateTopPageDto) {
     return this.topPageModel.findByIdAndUpdate(id, dto, { new: true }).exec();
   }
-
-  //async find(dto: FindTopPageDto) {
-  //  return 
-  //}
 }

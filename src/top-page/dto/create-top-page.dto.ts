@@ -3,6 +3,7 @@ import {
   IsArray,
   IsEnum,
   IsNumber,
+  IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
@@ -46,6 +47,7 @@ export class CreateTopPageDto {
   @IsString()
   category: string;
 
+  @IsOptional()
   @ValidateNested()
   @Type(() => HHDataDto)
   hh?: HHDataDto;
