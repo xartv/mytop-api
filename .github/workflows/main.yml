@@ -1,14 +1,19 @@
 name: Publish Docker
 
-on: [push]
+on:
+  push:
+    branches: [main]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@v5
+      - uses: actions/checkout@main
+      - name: Publish to registy
+        uses: elgohr/Publish-Docker-Github-Action@main
         with:
-          name: ghcr.io/xartv/mytop-api/mytop-api
+          registry: docker.pkg.github.com
+          name: docker.pkg.github.com/xartv/top-api/top-api
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          tags: "develop"
